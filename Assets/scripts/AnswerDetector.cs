@@ -66,6 +66,9 @@ public class AnswerDetector : MonoBehaviour
 
     void Report(Material[] answerMats, Material[] currentRowMats) // begin report
     {
+        int[] answerValues = new int[currentRowMats.Length];
+        List<Material> compMats = answerMats.ToList();
+        List<Color> colorAnswers = new List<Color>();
         for (int i = 0; i < answerMats.Length; i++)
         {
             int[] answers = new int[answerMats.Length];
