@@ -95,21 +95,22 @@ public class AnswerDetector : MonoBehaviour
         for (int i = 0; i < answerMats.Length; i++)
         {
             Debug.Log($" At index No. {i}, nums is {answerMats[i]}, and num2 is {currentRowMats[i]}.");
-        }
 
-        if(currentRowMats[i].color == answerMats[i].color)
-        {
-            answerValues[i] = 1;
-            InstantiateCorrectPin(hintGrid.transform.GetChild(i).transform);
-        }
-        else if (colorAnswers.Contains(currentRowMats[i].color))
-        {
-            answerValues[i] = 0;
-            InstantiateWrongPin(hintGrid.transform.GetChild(i).transform);
-        }
-        else
-        {
-            answerValues[i] = 1;
+
+            if (currentRowMats[i].color == answerMats[i].color)
+            {
+                answerValues[i] = 1;
+                InstantiateCorrectPin(hintGrid.transform.GetChild(i).transform);
+            }
+            else if (colorAnswers.Contains(currentRowMats[i].color))
+            {
+                answerValues[i] = 0;
+                InstantiateWrongPin(hintGrid.transform.GetChild(i).transform);
+            }
+            else
+            {
+                answerValues[i] = 1;
+            }
         }
     } //end report
 }
