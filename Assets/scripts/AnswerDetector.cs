@@ -6,8 +6,19 @@ using UnityEngine;
 
 public class AnswerDetector : MonoBehaviour
 {
+    //Portions of the Answer Detector Code is from https://canvas.colum.edu/courses/26780/files/3736111?wrap=1
+
+    /// <summary>
+    /// Create four public GameObject arrays
+    /// currentRow holds the four positions that the Game Player clicks for their answers
+    /// answerKey holds the four positions that contains the secret code.
+    /// pins holds the two prefabs for correct position/color, or correct color only
+    /// hintGrid refers to the parent object of the HintGrid.
+    /// </summary>
     public GameObject[] currentRow;
     public GameObject[] answerKey;
+    public GameObject[] pins;
+    public GameObject hintGrid;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +53,17 @@ public class AnswerDetector : MonoBehaviour
         Report(answerMats, currentRowMats);
     }
 
+    void InstantiateCorrectPin(Transform transform)
+    {
+        GameObject pin = Instantiate(pins[0]);
+        pin.transform.position = transform.position;
+    }
+    void InstantiateWrongPin(Transform transform)
+    {
+        GameObject pin = Instantiate(pins[1]);
+        pin.transform.position = transform.position;
+    }
+
     void Report(Material[] answerMats, Material[] currentRowMats) // begin report
     {
         for (int i = 0; i < answerMats.Length; i++)
@@ -70,6 +92,21 @@ public class AnswerDetector : MonoBehaviour
         for (int i = 0; i < answerMats.Length; i++)
         {
             Debug.Log($" At index No. {i}, nums is {answerMats[i]}, and num2 is {currentRowMats[i]}.");
+        }
+
+        if(currentRowMats[i].color == answerMats[i].color)
+        {
+            answerValues[i] = 1;
+            InstantiateCorrectPin(hintGrid.transform.GetChild(i).transform);
+        }
+        else if (colorAnswers.Contains(currentRowMats[i].color))
+        {
+            answerValues[i] = 0;
+            InstantiateWrongPin(hintGrid.transform.GetChild(i).transform);
+        }
+        else
+        {
+            answerValues[i] = 1;
         }
     } //end report
 }
